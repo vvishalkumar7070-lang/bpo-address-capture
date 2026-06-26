@@ -24,10 +24,7 @@
       text-align: center;
       margin-bottom: 50px;
     }
-    .logo {
-      font-size: 48px;
-      margin-bottom: 20px;
-    }
+    .logo { font-size: 48px; margin-bottom: 20px; }
     .header h1 {
       font-size: 42px;
       font-weight: 700;
@@ -36,10 +33,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .header p {
-      font-size: 16px;
-      color: #8892b0;
-    }
+    .header p { font-size: 16px; color: #8892b0; }
     .content {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -65,125 +59,51 @@
       border-color: #3b82f6;
       transform: translateX(5px);
     }
-    .feature-icon {
-      font-size: 24px;
-      flex-shrink: 0;
-    }
-    .feature-text {
-      flex: 1;
-    }
-    .feature-title {
-      font-weight: 600;
-      margin-bottom: 5px;
-    }
-    .feature-desc {
-      font-size: 13px;
-      color: #8892b0;
-    }
-    .login-box {
+    .feature-icon { font-size: 24px; flex-shrink: 0; }
+    .feature-text { flex: 1; }
+    .feature-title { font-weight: 600; margin-bottom: 5px; }
+    .feature-desc { font-size: 13px; color: #8892b0; }
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      padding: 40px;
       background: #141829;
       border: 1px solid #2a3155;
       border-radius: 16px;
-      padding: 40px;
       box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     }
-    .login-title {
+    .button-group h2 {
       font-size: 24px;
-      font-weight: 700;
-      margin-bottom: 30px;
       text-align: center;
-    }
-    .tabs {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 30px;
-      background: #1a1f3a;
-      padding: 8px;
-      border-radius: 10px;
-    }
-    .tab-btn {
-      flex: 1;
-      padding: 10px;
-      border: none;
-      background: transparent;
-      color: #8892b0;
-      cursor: pointer;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: all 0.3s;
-    }
-    .tab-btn.active {
-      background: #141829;
-      color: #3b82f6;
-    }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
       margin-bottom: 20px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .form-group label {
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: #8892b0;
-    }
-    .form-group input {
-      background: #1a1f3a;
-      border: 1px solid #2a3155;
-      border-radius: 8px;
-      padding: 12px;
-      color: #e0e6ff;
-      font-size: 14px;
-      transition: all 0.3s;
-    }
-    .form-group input:focus {
-      outline: none;
-      border-color: #3b82f6;
-      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-    }
-    .btn-submit {
-      width: 100%;
-      padding: 12px;
+    .btn-large {
+      padding: 16px;
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
       border: none;
       border-radius: 8px;
       color: white;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 16px;
       cursor: pointer;
       transition: all 0.3s;
-      margin-top: 10px;
+      text-decoration: none;
+      text-align: center;
+      display: block;
     }
-    .btn-submit:hover {
+    .btn-large:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
     }
-    .demo-credentials {
-      background: rgba(16, 185, 129, 0.1);
-      border: 1px solid rgba(16, 185, 129, 0.2);
-      border-radius: 8px;
-      padding: 12px;
-      margin-top: 15px;
-      font-size: 12px;
-      color: #8892b0;
-    }
-    .demo-credentials strong {
-      color: #10b981;
-      display: block;
-      margin-bottom: 5px;
-    }
+    .btn-agent { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+    .btn-admin { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
     @media (max-width: 768px) {
       .content { grid-template-columns: 1fr; }
       .header h1 { font-size: 28px; }
-      .login-box { padding: 30px 20px; }
     }
   </style>
 </head>
@@ -227,62 +147,16 @@
         </div>
       </div>
 
-      <div class="login-box">
-        <div class="login-title">🔐 Welcome</div>
-        <p style="text-align: center; color: #8892b0; margin-bottom: 20px;">BPO Address Capture System v1.0</p>
-        <div class="tabs">
-          <button class="tab-btn active" onclick="switchTab('agent')">👤 Agent</button>
-          <button class="tab-btn" onclick="switchTab('admin')">👨‍💼 Admin</button>
-        </div>
-
-        <div id="agent" class="tab-content active">
-          <form onsubmit="event.preventDefault(); alert('Demo System - Feature Coming Soon');">
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="agent@company.com" required>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn-submit">Login as Agent</button>
-          </form>
-          <div class="demo-credentials">
-            <strong>Demo Credentials:</strong>
-            Email: agent@example.com<br>
-            Password: demo123
-          </div>
-        </div>
-
-        <div id="admin" class="tab-content">
-          <form onsubmit="event.preventDefault(); alert('Demo System - Feature Coming Soon');">
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" placeholder="admin@company.com" required>
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input type="password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="btn-submit">Login as Admin</button>
-          </form>
-          <div class="demo-credentials">
-            <strong>Demo Credentials:</strong>
-            Email: admin@example.com<br>
-            Password: demo123
-          </div>
-        </div>
+      <div class="button-group">
+        <h2>🚀 Get Started</h2>
+        <a href="/agent" class="btn-large btn-agent">📞 Agent Portal</a>
+        <a href="/admin" class="btn-large btn-admin">👨‍💼 Admin Dashboard</a>
+        <p style="text-align: center; font-size: 12px; color: #8892b0; margin-top: 20px;">
+          Click above to access the portals<br>
+          No login required - Direct access
+        </p>
       </div>
     </div>
   </div>
-
-  <script>
-    function switchTab(tab) {
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-      document.getElementById(tab).classList.add('active');
-      event.target.classList.add('active');
-    }
-  </script>
 </body>
 </html>
