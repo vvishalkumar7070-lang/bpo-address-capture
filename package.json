@@ -1,7 +1,7 @@
 {
   "name": "bpo-address-capture",
-  "version": "1.0.0",
-  "description": "Professional BPO Address Capture System",
+  "version": "2.0.0",
+  "description": "Professional BPO Address Capture System with Voice & Analytics",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -13,7 +13,16 @@
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
-    "helmet": "^7.0.0"
+    "helmet": "^7.0.0",
+    "mongoose": "^7.0.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "express-async-errors": "^3.1.1",
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
   },
   "engines": {
     "node": "18.x"

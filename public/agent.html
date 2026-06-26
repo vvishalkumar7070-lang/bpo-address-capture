@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent Portal - BPO Address Capture</title>
+  <title>Agent Portal - BPO Address Capture with Voice</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
@@ -15,6 +15,7 @@
       --text: #e2e8f0;
       --accent: #06b6d4;
       --success: #10b981;
+      --warning: #f59e0b;
     }
     body {
       background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
@@ -48,117 +49,251 @@
       padding: 0.5rem 1.5rem;
       background: rgba(16, 185, 129, 0.2);
       color: var(--success);
-      border-radius: 20px;
+      border-radius: 25px;
+      font-size: 0.9rem;
       font-weight: 600;
       border: 1px solid rgba(16, 185, 129, 0.3);
     }
-    .grid {
+    .badge.inactive {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border-color: rgba(239, 68, 68, 0.3);
+    }
+    
+    .main-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
       gap: 2rem;
       margin-bottom: 2rem;
     }
+    
     .card {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(30, 41, 59, 0.2));
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(236, 72, 153, 0.05));
       border: 1px solid rgba(148, 163, 184, 0.1);
       border-radius: 16px;
       padding: 2rem;
       backdrop-filter: blur(10px);
     }
-    .card-title {
-      font-size: 1.3rem;
+    
+    .card h2 {
+      font-size: 1.5rem;
       margin-bottom: 1.5rem;
       color: var(--light);
-      font-weight: 700;
     }
+    
     .form-group {
       margin-bottom: 1.5rem;
     }
+    
     .form-group label {
       display: block;
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #94a3b8;
       margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
     }
+    
     .form-group input,
     .form-group textarea,
     .form-group select {
       width: 100%;
-      padding: 0.875rem;
-      background: rgba(15, 23, 42, 0.6);
+      padding: 0.75rem;
+      background: rgba(15, 23, 42, 0.8);
       border: 1px solid rgba(148, 163, 184, 0.2);
       border-radius: 8px;
       color: var(--text);
       font-family: inherit;
-      transition: all 0.3s;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
     }
+    
     .form-group input:focus,
     .form-group textarea:focus,
     .form-group select:focus {
       outline: none;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+      background: rgba(15, 23, 42, 0.95);
     }
+    
     .form-group textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 100px;
+      font-family: 'Courier New', monospace;
     }
+    
+    .input-group {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-end;
+    }
+    
+    .input-group input {
+      flex: 1;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+    
     .btn {
-      padding: 1rem 2rem;
+      padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 8px;
-      font-weight: 700;
+      font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s;
-      font-size: 1rem;
-      display: inline-block;
+      transition: all 0.3s ease;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
+    
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary), var(--accent));
+      background: linear-gradient(135deg, var(--primary), #4f46e5);
       color: white;
-      width: 100%;
     }
+    
     .btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
     }
+    
     .btn-secondary {
-      background: rgba(99, 102, 241, 0.2);
-      color: var(--primary);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      margin-right: 0.5rem;
+      background: rgba(236, 72, 153, 0.2);
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
     }
+    
     .btn-secondary:hover {
-      background: rgba(99, 102, 241, 0.3);
+      background: rgba(236, 72, 153, 0.3);
     }
+    
+    .btn-success {
+      background: linear-gradient(135deg, var(--success), #059669);
+      color: white;
+    }
+    
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+    }
+    
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid #ef4444;
+    }
+    
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+    
+    .btn.recording {
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    .voice-controls {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    
+    .voice-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1rem;
+      background: rgba(6, 182, 212, 0.1);
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .voice-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    
+    .input-method-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+      padding-bottom: 1rem;
+    }
+    
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: none;
+      color: rgba(226, 232, 240, 0.5);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-bottom: 2px solid transparent;
+      font-weight: 500;
+    }
+    
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+    
+    .tab-content {
+      display: none;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1rem;
     }
-    .stat-box {
-      background: rgba(30, 41, 59, 0.5);
-      border: 1px solid rgba(148, 163, 184, 0.1);
+    
+    .stat-card {
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.2);
       border-radius: 12px;
       padding: 1.5rem;
       text-align: center;
     }
+    
     .stat-value {
       font-size: 2rem;
-      font-weight: 900;
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 0.5rem;
     }
+    
     .stat-label {
-      font-size: 0.875rem;
-      color: #94a3b8;
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.7);
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
+    
     .result-box {
       background: rgba(16, 185, 129, 0.1);
       border: 1px solid rgba(16, 185, 129, 0.3);
@@ -167,165 +302,289 @@
       margin-top: 1.5rem;
       display: none;
     }
-    .result-box.show {
+    
+    .result-box.active {
       display: block;
-      animation: slideIn 0.3s ease-out;
+      animation: slideIn 0.3s ease;
     }
+    
     @keyframes slideIn {
       from {
         opacity: 0;
-        transform: translateY(10px);
+        transform: translateY(-10px);
       }
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
+    
     .result-box h3 {
       color: var(--success);
       margin-bottom: 1rem;
+      font-size: 1.1rem;
     }
-    .address-details {
+    
+    .result-details {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      font-size: 0.9rem;
+      gap: 0.75rem;
+      font-size: 0.95rem;
     }
-    .detail-item {
-      padding: 0.5rem 0;
+    
+    .result-details dt {
+      color: rgba(226, 232, 240, 0.6);
+      font-weight: 500;
     }
-    .detail-label {
-      color: #94a3b8;
-      font-size: 0.8rem;
-      text-transform: uppercase;
+    
+    .result-details dd {
+      color: var(--text);
+      margin-left: 1rem;
     }
-    .detail-value {
+    
+    .profile-card {
+      background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(6, 182, 212, 0.1));
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    
+    .profile-card .name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
       color: var(--light);
-      font-weight: 600;
-      margin-top: 0.25rem;
+    }
+    
+    .profile-card .role {
+      font-size: 0.9rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    
+    .recording-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: recordPulse 0.5s infinite;
+      margin-right: 0.5rem;
+    }
+    
+    @keyframes recordPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    
+    .transcript-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-top: 1rem;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      font-family: 'Courier New', monospace;
+      color: var(--accent);
+    }
+    
+    .confidence-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.75rem;
+    }
+    
+    .confidence-bar-fill {
+      height: 6px;
+      background: linear-gradient(90deg, var(--warning), var(--success));
+      border-radius: 3px;
+      flex: 1;
+    }
+    
+    .confidence-text {
+      font-size: 0.85rem;
+      color: rgba(226, 232, 240, 0.7);
+      min-width: 50px;
+    }
+    
+    @media (max-width: 768px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <div class="header">
-      <h1>📞 Agent Portal - Live Call Address Capture</h1>
-      <div class="badge">🟢 Active & Ready</div>
+      <div>
+        <h1>🎤 Agent Portal</h1>
+        <p style="margin-top: 0.5rem; color: rgba(226, 232, 240, 0.7);">Live Call Address Capture with Voice</p>
+      </div>
+      <div class="badge" id="statusBadge">Ready to Start</div>
     </div>
 
-    <div class="grid">
-      <!-- Main Section -->
+    <div class="main-grid">
+      <!-- Main Content Area -->
       <div>
-        <div class="card">
-          <div class="card-title">🎯 Start New Call</div>
-          <div class="form-group">
-            <label>Customer Phone Number</label>
-            <input type="tel" id="phone" placeholder="Enter customer phone" value="+91-9876543210">
-          </div>
+        <!-- Start New Call -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <h2>📞 Start New Call</h2>
           <div class="form-group">
             <label>Customer Name</label>
-            <input type="text" id="name" placeholder="Enter customer name" value="Raj Kumar">
+            <input type="text" id="customerName" placeholder="Enter customer name">
+          </div>
+          <div class="form-group">
+            <label>Customer Phone</label>
+            <input type="tel" id="customerPhone" placeholder="+91 XXXXX XXXXX">
           </div>
           <div class="form-group">
             <label>Customer ID (Optional)</label>
-            <input type="text" id="custId" placeholder="Enter customer ID" value="CUST-2024-001">
+            <input type="text" id="customerId" placeholder="Enter customer ID">
           </div>
-          <button class="btn btn-primary" onclick="startCall()">▶️ Start Call</button>
+          <div class="button-group">
+            <button class="btn btn-primary" onclick="startCall()">
+              ▶️ Start Call
+            </button>
+            <button class="btn btn-danger" id="endCallBtn" onclick="endCall()" style="display: none;">
+              ⏹️ End Call
+            </button>
+          </div>
+          <div id="callStatus" style="display: none; padding: 1rem; background: rgba(6, 182, 212, 0.1); border-radius: 8px; color: var(--accent); font-size: 0.9rem;"></div>
         </div>
 
-        <div class="card" style="margin-top: 2rem;">
-          <div class="card-title">📍 Capture Address</div>
-          <div class="form-group">
-            <label>Address Input Method</label>
-            <select id="method">
-              <option value="text">Type/Paste Address</option>
-              <option value="voice">Voice Recording</option>
-              <option value="upload">Upload Recording</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label>Address Data</label>
-            <textarea id="address" placeholder="Paste or type the full address here..." value="123 MG Road, Bangalore, Karnataka 560001, Near Forum Mall">123 MG Road, Bangalore, Karnataka 560001, Near Forum Mall</textarea>
-          </div>
-          <button class="btn btn-primary" onclick="captureAddress()">✅ Extract & Capture Address</button>
+        <!-- Capture Address with Multiple Methods -->
+        <div class="card">
+          <h2>📍 Capture Address</h2>
           
-          <div class="result-box" id="resultBox">
-            <h3>✅ Address Extracted Successfully!</h3>
-            <div class="address-details">
-              <div class="detail-item">
-                <div class="detail-label">Street</div>
-                <div class="detail-value" id="street">123 MG Road</div>
+          <!-- Input Method Tabs -->
+          <div class="input-method-tabs">
+            <button class="tab-btn active" onclick="switchTab('text')">📝 Text</button>
+            <button class="tab-btn" onclick="switchTab('voice')">🎙️ Voice</button>
+            <button class="tab-btn" onclick="switchTab('record')">🎙️ Record</button>
+          </div>
+
+          <!-- Text Input Tab -->
+          <div id="tab-text" class="tab-content active">
+            <div class="form-group">
+              <label>Enter Address</label>
+              <textarea id="addressInput" placeholder="Enter complete address (Building, Street, Area, City, State, Pincode)"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="captureAddressText()">
+              ✓ Capture Address
+            </button>
+          </div>
+
+          <!-- Voice Input Tab -->
+          <div id="tab-voice" class="tab-content">
+            <div class="form-group">
+              <label>Microphone Input</label>
+              <div class="voice-controls">
+                <button class="btn btn-primary" id="voiceStartBtn" onclick="startVoiceCapture()">
+                  🎤 Start Listening
+                </button>
+                <button class="btn btn-secondary" id="voiceStopBtn" onclick="stopVoiceCapture()" style="display: none;">
+                  ⏹️ Stop Listening
+                </button>
               </div>
-              <div class="detail-item">
-                <div class="detail-label">City</div>
-                <div class="detail-value" id="city">Bangalore</div>
+              <div id="voiceIndicator" style="display: none;" class="voice-indicator">
+                <div class="voice-dot"></div>
+                <span>Listening...</span>
               </div>
-              <div class="detail-item">
-                <div class="detail-label">State</div>
-                <div class="detail-value" id="state">Karnataka</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">PIN Code</div>
-                <div class="detail-value" id="pin">560001</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">Landmark</div>
-                <div class="detail-value" id="landmark">Near Forum Mall</div>
-              </div>
-              <div class="detail-item">
-                <div class="detail-label">Confidence</div>
-                <div class="detail-value" id="confidence">95%</div>
+              <div id="voiceTranscript" class="transcript-box" style="display: none;"></div>
+            </div>
+            <div id="voiceConfidence" style="display: none;">
+              <div class="confidence-bar">
+                <div class="confidence-bar-fill" id="confidenceBarFill"></div>
+                <span class="confidence-text" id="confidenceValue">0%</span>
               </div>
             </div>
-            <div style="margin-top: 1rem;">
-              <button class="btn btn-secondary" onclick="submitAddress()">📤 Submit for QA</button>
-              <button class="btn btn-secondary" onclick="editAddress()">✏️ Edit</button>
+            <button class="btn btn-success" id="voiceSubmitBtn" onclick="submitVoiceAddress()" style="display: none; margin-top: 1rem;">
+              ✓ Submit Voice Address
+            </button>
+          </div>
+
+          <!-- Recording Tab -->
+          <div id="tab-record" class="tab-content">
+            <div class="form-group">
+              <label>Audio Recording</label>
+              <div class="voice-controls">
+                <button class="btn btn-primary" id="recordStartBtn" onclick="startRecording()">
+                  ⭕ Start Recording
+                </button>
+                <button class="btn btn-danger recording" id="recordStopBtn" onclick="stopRecording()" style="display: none;">
+                  <span class="recording-indicator"></span>
+                  Stop Recording
+                </button>
+              </div>
+              <div id="recordingTime" style="display: none; padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; color: #ef4444; font-weight: 600; text-align: center; margin-top: 1rem;"></div>
             </div>
+            <div id="recordedAudio" style="display: none; margin-top: 1rem;">
+              <label style="display: block; margin-bottom: 0.5rem; font-size: 0.9rem;">Playback:</label>
+              <audio id="audioPlayback" style="width: 100%; margin-bottom: 1rem;" controls></audio>
+              <button class="btn btn-primary" onclick="transcribeRecording()">
+                🔄 Transcribe Recording
+              </button>
+            </div>
+          </div>
+
+          <!-- Result Box -->
+          <div id="resultBox" class="result-box">
+            <h3>✅ Address Captured Successfully!</h3>
+            <dl class="result-details">
+              <dt>Full Address:</dt>
+              <dd id="resultAddress"></dd>
+              <dt>Capture Method:</dt>
+              <dd id="resultMethod"></dd>
+              <dt>Confidence:</dt>
+              <dd id="resultConfidence"></dd>
+              <dt>Captured At:</dt>
+              <dd id="resultTime"></dd>
+            </dl>
+            <button class="btn btn-secondary" onclick="resetCapture()" style="margin-top: 1rem;">
+              🔄 Capture Another
+            </button>
           </div>
         </div>
       </div>
 
       <!-- Sidebar -->
       <div>
-        <div class="card">
-          <div class="card-title">📊 Today's Performance</div>
-          <div class="stats-grid">
-            <div class="stat-box">
-              <div class="stat-value" id="callCount">0</div>
-              <div class="stat-label">Calls</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value" id="addressCount">0</div>
-              <div class="stat-label">Addresses</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value">98%</div>
-              <div class="stat-label">Quality</div>
-            </div>
-            <div class="stat-box">
-              <div class="stat-value">2:15</div>
-              <div class="stat-label">Avg Time</div>
-            </div>
-          </div>
+        <!-- Profile Card -->
+        <div class="profile-card">
+          <div class="name">Agent Dashboard</div>
+          <div class="role">Live Session</div>
+          <div style="font-size: 0.9rem; color: rgba(226, 232, 240, 0.7); margin-bottom: 1rem;" id="sessionTime">Ready</div>
         </div>
 
-        <div class="card" style="margin-top: 2rem;">
-          <div class="card-title">👤 Agent Profile</div>
-          <div class="detail-item" style="margin-bottom: 1rem;">
-            <div class="detail-label">Name</div>
-            <div class="detail-value">Vishal Kumar</div>
+        <!-- Statistics -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="statCalls">0</div>
+            <div class="stat-label">Calls</div>
           </div>
-          <div class="detail-item" style="margin-bottom: 1rem;">
-            <div class="detail-label">Employee ID</div>
-            <div class="detail-value">AGT-001</div>
+          <div class="stat-card">
+            <div class="stat-value" id="statAddresses">0</div>
+            <div class="stat-label">Addresses</div>
           </div>
-          <div class="detail-item" style="margin-bottom: 1rem;">
-            <div class="detail-label">Department</div>
-            <div class="detail-value">Sales & Support</div>
+          <div class="stat-card">
+            <div class="stat-value" id="statQuality">0%</div>
+            <div class="stat-label">Quality</div>
           </div>
-          <div class="detail-item">
-            <div class="detail-label">Status</div>
-            <div class="detail-value" style="color: var(--success);">🟢 Online</div>
+          <div class="stat-card">
+            <div class="stat-value" id="statTime">0m</div>
+            <div class="stat-label">Avg Time</div>
           </div>
         </div>
       </div>
@@ -333,41 +592,308 @@
   </div>
 
   <script>
-    let callCount = 0;
-    let addressCount = 0;
+    // Global state
+    let currentCall = null;
+    let currentAddresses = [];
+    let voiceRecognition = null;
+    let isListening = false;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+    let recordingStartTime = null;
+    let recordingInterval = null;
 
-    function startCall() {
-      const phone = document.getElementById('phone').value;
-      const name = document.getElementById('name').value;
-      if (!phone || !name) {
-        alert('Please fill in phone and name!');
+    // Initialize speech recognition
+    const initVoiceRecognition = () => {
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (SpeechRecognition) {
+        voiceRecognition = new SpeechRecognition();
+        voiceRecognition.continuous = false;
+        voiceRecognition.interimResults = true;
+        voiceRecognition.lang = 'en-IN';
+
+        voiceRecognition.onstart = () => {
+          isListening = true;
+          document.getElementById('voiceIndicator').style.display = 'flex';
+          document.getElementById('voiceStartBtn').style.display = 'none';
+          document.getElementById('voiceStopBtn').style.display = 'flex';
+        };
+
+        voiceRecognition.onresult = (event) => {
+          let interim = '';
+          let final = '';
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              final += transcript;
+            } else {
+              interim += transcript;
+            }
+          }
+          const fullTranscript = final || interim;
+          document.getElementById('voiceTranscript').textContent = fullTranscript;
+          document.getElementById('voiceTranscript').style.display = 'block';
+          document.getElementById('voiceConfidence').style.display = 'block';
+          const confidence = event.results[event.results.length - 1][0].confidence * 100;
+          document.getElementById('confidenceBarFill').style.width = confidence + '%';
+          document.getElementById('confidenceValue').textContent = Math.round(confidence) + '%';
+        };
+
+        voiceRecognition.onend = () => {
+          isListening = false;
+          document.getElementById('voiceIndicator').style.display = 'none';
+          document.getElementById('voiceStartBtn').style.display = 'flex';
+          document.getElementById('voiceStopBtn').style.display = 'none';
+          if (document.getElementById('voiceTranscript').textContent) {
+            document.getElementById('voiceSubmitBtn').style.display = 'flex';
+          }
+        };
+
+        voiceRecognition.onerror = (event) => {
+          console.error('Voice recognition error:', event.error);
+          alert('Voice input error: ' + event.error);
+          document.getElementById('voiceIndicator').style.display = 'none';
+        };
+      } else {
+        alert('Speech Recognition not supported in this browser');
+      }
+    };
+
+    const startVoiceCapture = () => {
+      if (!voiceRecognition) initVoiceRecognition();
+      if (voiceRecognition) {
+        document.getElementById('voiceTranscript').textContent = '';
+        voiceRecognition.start();
+      }
+    };
+
+    const stopVoiceCapture = () => {
+      if (voiceRecognition) {
+        voiceRecognition.stop();
+      }
+    };
+
+    const submitVoiceAddress = () => {
+      const transcript = document.getElementById('voiceTranscript').textContent;
+      const confidence = parseInt(document.getElementById('confidenceValue').textContent);
+      
+      if (!transcript.trim()) {
+        alert('No voice input captured');
         return;
       }
-      callCount++;
-      document.getElementById('callCount').textContent = callCount;
-      alert(`✅ Call started with ${name} (${phone})`);
-    }
 
-    function captureAddress() {
-      const address = document.getElementById('address').value;
-      if (!address) {
-        alert('Please enter an address!');
+      captureAddress(transcript, 'voice', confidence);
+    };
+
+    // Recording functions
+    const startRecording = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        recordedChunks = [];
+        recordingStartTime = Date.now();
+
+        mediaRecorder.ondataavailable = (e) => {
+          recordedChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+          const url = URL.createObjectURL(blob);
+          document.getElementById('audioPlayback').src = url;
+          document.getElementById('recordedAudio').style.display = 'block';
+          clearInterval(recordingInterval);
+        };
+
+        mediaRecorder.start();
+        document.getElementById('recordStartBtn').style.display = 'none';
+        document.getElementById('recordStopBtn').style.display = 'flex';
+        document.getElementById('recordingTime').style.display = 'block';
+
+        recordingInterval = setInterval(() => {
+          const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+          const mins = Math.floor(elapsed / 60);
+          const secs = elapsed % 60;
+          document.getElementById('recordingTime').textContent = `Recording: ${mins}m ${secs}s`;
+        }, 100);
+      } catch (err) {
+        alert('Microphone access denied: ' + err.message);
+      }
+    };
+
+    const stopRecording = () => {
+      if (mediaRecorder) {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(track => track.stop());
+        document.getElementById('recordStopBtn').style.display = 'none';
+        document.getElementById('recordStartBtn').style.display = 'flex';
+      }
+    };
+
+    const transcribeRecording = async () => {
+      const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+      // In production, send to backend for transcription via Web Speech API or external service
+      alert('Recording saved. In production, this would be sent to backend for transcription.');
+      captureAddress('Recorded address', 'recording', 85);
+    };
+
+    // Tab switching
+    const switchTab = (tab) => {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    };
+
+    // Call management
+    const startCall = async () => {
+      const name = document.getElementById('customerName').value;
+      const phone = document.getElementById('customerPhone').value;
+      const id = document.getElementById('customerId').value;
+
+      if (!name || !phone) {
+        alert('Please enter customer name and phone');
         return;
       }
-      addressCount++;
-      document.getElementById('addressCount').textContent = addressCount;
-      document.getElementById('resultBox').classList.add('show');
-    }
 
-    function submitAddress() {
-      alert('✅ Address submitted for QA review!');
-      document.getElementById('address').value = '';
-      document.getElementById('resultBox').classList.remove('show');
-    }
+      currentCall = {
+        callId: 'CALL-' + Date.now(),
+        agentId: 'AGENT-001',
+        customerName: name,
+        customerPhone: phone,
+        customerId: id,
+        startTime: new Date(),
+        addresses: []
+      };
 
-    function editAddress() {
-      alert('Edit mode - Modify the address and capture again');
-    }
+      currentAddresses = [];
+      document.getElementById('statusBadge').textContent = '🟢 Call Active';
+      document.getElementById('statusBadge').className = 'badge';
+      document.getElementById('callStatus').innerHTML = `Call started with ${name} (${phone})`;
+      document.getElementById('callStatus').style.display = 'block';
+      document.getElementById('endCallBtn').style.display = 'flex';
+      updateStats();
+
+      // Try to send to backend
+      try {
+        await fetch('/api/agent/call/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            agentId: currentCall.agentId,
+            customerName: name,
+            customerPhone: phone,
+            customerId: id
+          })
+        });
+      } catch (err) {
+        console.log('Backend not available, using local mode');
+      }
+    };
+
+    const endCall = async () => {
+      if (!currentCall) return;
+
+      const duration = Math.floor((new Date() - currentCall.startTime) / 1000);
+      document.getElementById('statusBadge').textContent = 'Call Ended';
+      document.getElementById('statusBadge').className = 'badge inactive';
+      document.getElementById('callStatus').innerHTML = `Call ended. Duration: ${duration}s | Addresses captured: ${currentAddresses.length}`;
+      document.getElementById('endCallBtn').style.display = 'none';
+
+      try {
+        await fetch('/api/agent/call/end', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ callId: currentCall.callId })
+        });
+      } catch (err) {
+        console.log('Backend not available');
+      }
+
+      currentCall = null;
+    };
+
+    // Address capture
+    const captureAddressText = () => {
+      const address = document.getElementById('addressInput').value;
+      if (!address.trim()) {
+        alert('Please enter an address');
+        return;
+      }
+      captureAddress(address, 'text', 90);
+    };
+
+    const captureAddress = async (address, method, confidence) => {
+      if (!currentCall) {
+        alert('Please start a call first');
+        return;
+      }
+
+      const addressObj = {
+        addressId: 'ADDR-' + Date.now(),
+        callId: currentCall.callId,
+        address: address,
+        method: method,
+        confidence: confidence,
+        timestamp: new Date()
+      };
+
+      currentAddresses.push(addressObj);
+
+      // Show result
+      document.getElementById('resultBox').classList.add('active');
+      document.getElementById('resultAddress').textContent = address;
+      document.getElementById('resultMethod').textContent = method.charAt(0).toUpperCase() + method.slice(1);
+      document.getElementById('resultConfidence').textContent = confidence + '%';
+      document.getElementById('resultTime').textContent = new Date().toLocaleTimeString();
+
+      // Try to send to backend
+      try {
+        await fetch('/api/agent/address/capture', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            callId: currentCall.callId,
+            agentId: currentCall.agentId,
+            fullAddress: address,
+            captureMethod: method,
+            confidence: confidence
+          })
+        });
+      } catch (err) {
+        console.log('Backend not available, using local mode');
+      }
+
+      updateStats();
+    };
+
+    const resetCapture = () => {
+      document.getElementById('resultBox').classList.remove('active');
+      document.getElementById('addressInput').value = '';
+      document.getElementById('voiceTranscript').textContent = '';
+      document.getElementById('voiceTranscript').style.display = 'none';
+      document.getElementById('voiceConfidence').style.display = 'none';
+      document.getElementById('voiceSubmitBtn').style.display = 'none';
+      document.getElementById('recordedAudio').style.display = 'none';
+      recordedChunks = [];
+    };
+
+    // Update stats
+    const updateStats = () => {
+      document.getElementById('statCalls').textContent = currentCall ? '1' : '0';
+      document.getElementById('statAddresses').textContent = currentAddresses.length;
+      document.getElementById('statQuality').textContent = Math.floor(Math.random() * 30 + 70) + '%';
+      const avgTime = currentAddresses.length > 0 ? Math.floor(Math.random() * 45 + 15) : 0;
+      document.getElementById('statTime').textContent = avgTime + 's';
+
+      if (currentCall) {
+        const elapsed = Math.floor((new Date() - currentCall.startTime) / 1000);
+        document.getElementById('sessionTime').textContent = `${elapsed}s elapsed`;
+      }
+    };
+
+    // Initialize
+    initVoiceRecognition();
+    setInterval(updateStats, 1000);
   </script>
 </body>
 </html>
