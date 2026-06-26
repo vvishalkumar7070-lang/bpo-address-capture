@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BPO Address Capture - Professional Call Center Solution</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0e27 0%, #0f1535 100%);
+      color: #e0e6ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .logo {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .header p {
+      font-size: 16px;
+      color: #8892b0;
+    }
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .features {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .feature {
+      display: flex;
+      gap: 15px;
+      padding: 15px;
+      background: rgba(59, 130, 246, 0.05);
+      border: 1px solid #2a3155;
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+    .feature:hover {
+      background: rgba(59, 130, 246, 0.1);
+      border-color: #3b82f6;
+      transform: translateX(5px);
+    }
+    .feature-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .feature-text {
+      flex: 1;
+    }
+    .feature-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    .feature-desc {
+      font-size: 13px;
+      color: #8892b0;
+    }
+    .login-box {
+      background: #141829;
+      border: 1px solid #2a3155;
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    .login-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+      background: #1a1f3a;
+      padding: 8px;
+      border-radius: 10px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      color: #8892b0;
+      cursor: pointer;
+      font-weight: 600;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+    .tab-btn.active {
+      background: #141829;
+      color: #3b82f6;
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8892b0;
+    }
+    .form-group input {
+      background: #1a1f3a;
+      border: 1px solid #2a3155;
+      border-radius: 8px;
+      padding: 12px;
+      color: #e0e6ff;
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    }
+    .demo-credentials {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #8892b0;
+    }
+    .demo-credentials strong {
+      color: #10b981;
+      display: block;
+      margin-bottom: 5px;
+    }
+    @media (max-width: 768px) {
+      .content { grid-template-columns: 1fr; }
+      .header h1 { font-size: 28px; }
+      .login-box { padding: 30px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">📍</div>
+      <h1>BPO Address Capture</h1>
+      <p>Professional Address Intelligence for Call Centers</p>
+    </div>
+
+    <div class="content">
+      <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🎤</div>
+          <div class="feature-text">
+            <div class="feature-title">Live Voice Capture</div>
+            <div class="feature-desc">Capture addresses during calls with real-time transcription</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✍️</div>
+          <div class="feature-text">
+            <div class="feature-title">Direct Input</div>
+            <div class="feature-desc">Type or paste addresses directly into the system</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">
+            <div class="feature-title">Smart Extraction</div>
+            <div class="feature-desc">Automatic parsing and validation of Indian addresses</div>
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">✅</div>
+          <div class="feature-text">
+            <div class="feature-title">QA & Review</div>
+            <div class="feature-desc">Built-in quality assurance and address validation</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-box">
+        <div class="login-title">🔐 Welcome</div>
+        <p style="text-align: center; color: #8892b0; margin-bottom: 20px;">BPO Address Capture System v1.0</p>
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('agent')">👤 Agent</button>
+          <button class="tab-btn" onclick="switchTab('admin')">👨‍💼 Admin</button>
+        </div>
+
+        <div id="agent" class="tab-content active">
+          <form onsubmit="event.preventDefault(); alert('Demo System - Feature Coming Soon');">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="agent@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-submit">Login as Agent</button>
+          </form>
+          <div class="demo-credentials">
+            <strong>Demo Credentials:</strong>
+            Email: agent@example.com<br>
+            Password: demo123
+          </div>
+        </div>
+
+        <div id="admin" class="tab-content">
+          <form onsubmit="event.preventDefault(); alert('Demo System - Feature Coming Soon');">
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="admin@company.com" required>
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input type="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-submit">Login as Admin</button>
+          </form>
+          <div class="demo-credentials">
+            <strong>Demo Credentials:</strong>
+            Email: admin@example.com<br>
+            Password: demo123
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>
