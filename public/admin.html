@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - BPO Address Capture</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: linear-gradient(135deg, #0a0e27 0%, #0f1535 100%);
+      color: #e0e6ff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .header {
+      background: #141829;
+      border: 1px solid #2a3155;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      font-size: 28px;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 10px 20px;
+      background: #141829;
+      border: 1px solid #2a3155;
+      border-radius: 8px;
+      color: #8892b0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+    .tab-btn.active {
+      background: #3b82f6;
+      color: white;
+      border-color: #3b82f6;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+    .metric-card {
+      background: #141829;
+      border: 1px solid #2a3155;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .metric-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #3b82f6;
+      margin: 10px 0;
+    }
+    .metric-label {
+      font-size: 12px;
+      color: #8892b0;
+      text-transform: uppercase;
+    }
+    .table-container {
+      background: #141829;
+      border: 1px solid #2a3155;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .table th {
+      background: #1a1f3a;
+      padding: 15px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #8892b0;
+      border-bottom: 1px solid #2a3155;
+    }
+    .table td {
+      padding: 15px;
+      border-bottom: 1px solid #2a3155;
+    }
+    .table tr:hover {
+      background: #1a1f3a;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge.approved {
+      background: rgba(16, 185, 129, 0.2);
+      color: #10b981;
+    }
+    .badge.pending {
+      background: rgba(245, 158, 11, 0.2);
+      color: #f59e0b;
+    }
+    .badge.active {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+    .btn {
+      padding: 8px 16px;
+      background: #3b82f6;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .btn:hover {
+      background: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📊 Admin Dashboard</h1>
+      <button class="btn" onclick="alert('Feature: Logout')">Logout</button>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active">📈 Overview</button>
+      <button class="tab-btn">👥 Agents</button>
+      <button class="tab-btn">📍 Addresses</button>
+      <button class="tab-btn">📊 Analytics</button>
+    </div>
+
+    <div class="grid">
+      <div class="metric-card">
+        <div class="metric-label">Total Agents</div>
+        <div class="metric-value">12</div>
+        <span class="badge active">8 Active</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Total Calls Today</div>
+        <div class="metric-value">247</div>
+        <span class="badge approved">+15% vs yesterday</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Addresses Captured</div>
+        <div class="metric-value">245</div>
+        <span class="badge approved">98% Quality</span>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Pending QA Review</div>
+        <div class="metric-value">12</div>
+        <span class="badge pending">Needs Review</span>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Agent Name</th>
+            <th>Calls Today</th>
+            <th>Addresses</th>
+            <th>Quality Score</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Vishal Kumar</td>
+            <td>25</td>
+            <td>24</td>
+            <td>98%</td>
+            <td><span class="badge active">Active</span></td>
+            <td><button class="btn">View</button></td>
+          </tr>
+          <tr>
+            <td>Priya Singh</td>
+            <td>22</td>
+            <td>21</td>
+            <td>96%</td>
+            <td><span class="badge active">Active</span></td>
+            <td><button class="btn">View</button></td>
+          </tr>
+          <tr>
+            <td>Raj Patel</td>
+            <td>20</td>
+            <td>19</td>
+            <td>94%</td>
+            <td><span class="badge active">Active</span></td>
+            <td><button class="btn">View</button></td>
+          </tr>
+          <tr>
+            <td>Anjali Sharma</td>
+            <td>18</td>
+            <td>18</td>
+            <td>95%</td>
+            <td><span class="badge active">Active</span></td>
+            <td><button class="btn">View</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-container" style="margin-top: 20px;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Address</th>
+            <th>Agent</th>
+            <th>City</th>
+            <th>QA Status</th>
+            <th>Confidence</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>123 MG Road, Bangalore</td>
+            <td>Vishal Kumar</td>
+            <td>Bangalore</td>
+            <td><span class="badge approved">Approved</span></td>
+            <td>98%</td>
+            <td><button class="btn">Review</button></td>
+          </tr>
+          <tr>
+            <td>45 Bandra Lane, Mumbai</td>
+            <td>Priya Singh</td>
+            <td>Mumbai</td>
+            <td><span class="badge pending">Pending</span></td>
+            <td>92%</td>
+            <td><button class="btn">Review</button></td>
+          </tr>
+          <tr>
+            <td>789 Park Street, Delhi</td>
+            <td>Raj Patel</td>
+            <td>Delhi</td>
+            <td><span class="badge approved">Approved</span></td>
+            <td>96%</td>
+            <td><button class="btn">Review</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
