@@ -3,160 +3,252 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BPO Address Capture - Professional Call Center Solution</title>
+  <title>BPO Address Capture - Live Call Intelligence</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #6366f1;
+      --secondary: #ec4899;
+      --dark: #0f172a;
+      --darker: #020617;
+      --light: #f1f5f9;
+      --text: #e2e8f0;
+      --accent: #06b6d4;
+    }
     body {
-      background: linear-gradient(135deg, #0a0e27 0%, #0f1535 100%);
-      color: #e0e6ff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+      color: var(--text);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .navbar {
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(100, 116, 139, 0.1);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-content {
+      max-width: 1400px;
+      margin: 0 auto;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    .container {
-      max-width: 1200px;
-      width: 100%;
-    }
-    .header {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    .logo { font-size: 48px; margin-bottom: 20px; }
-    .header h1 {
-      font-size: 42px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .header p { font-size: 16px; color: #8892b0; }
-    .content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      justify-content: space-between;
       align-items: center;
     }
-    .features {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .feature {
-      display: flex;
-      gap: 15px;
-      padding: 15px;
-      background: rgba(59, 130, 246, 0.05);
-      border: 1px solid #2a3155;
-      border-radius: 10px;
-      transition: all 0.3s;
-    }
-    .feature:hover {
-      background: rgba(59, 130, 246, 0.1);
-      border-color: #3b82f6;
-      transform: translateX(5px);
-    }
-    .feature-icon { font-size: 24px; flex-shrink: 0; }
-    .feature-text { flex: 1; }
-    .feature-title { font-weight: 600; margin-bottom: 5px; }
-    .feature-desc { font-size: 13px; color: #8892b0; }
-    .button-group {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      padding: 40px;
-      background: #141829;
-      border: 1px solid #2a3155;
-      border-radius: 16px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    }
-    .button-group h2 {
+    .logo {
       font-size: 24px;
-      text-align: center;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      text-decoration: none;
     }
-    .btn-large {
-      padding: 16px;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+    .hero {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: #94a3b8;
+      margin-bottom: 3rem;
+    }
+    .cta-buttons {
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 4rem;
+    }
+    .btn {
+      padding: 1rem 2rem;
       border: none;
-      border-radius: 8px;
-      color: white;
+      border-radius: 12px;
+      font-size: 1rem;
       font-weight: 700;
-      font-size: 16px;
       cursor: pointer;
       transition: all 0.3s;
       text-decoration: none;
+      display: inline-block;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.5);
+    }
+    .btn-secondary {
+      background: linear-gradient(135deg, var(--secondary), #ec4899);
+      color: white;
+      box-shadow: 0 10px 30px rgba(236, 72, 153, 0.3);
+    }
+    .btn-secondary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(236, 72, 153, 0.5);
+    }
+    .features-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .feature-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.5), rgba(30, 41, 59, 0.2));
+      border: 1px solid rgba(148, 163, 184, 0.1);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: all 0.3s;
+      backdrop-filter: blur(10px);
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(99, 102, 241, 0.3);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.05));
+    }
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--light);
+    }
+    .feature-card p {
+      color: #94a3b8;
+      line-height: 1.6;
+    }
+    .stats {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+    }
+    .stat {
       text-align: center;
-      display: block;
+      padding: 2rem;
+      background: rgba(30, 41, 59, 0.3);
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.1);
     }
-    .btn-large:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    .btn-agent { background: linear-gradient(135deg, #3b82f6, #2563eb); }
-    .btn-admin { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
-    @media (max-width: 768px) {
-      .content { grid-template-columns: 1fr; }
-      .header h1 { font-size: 28px; }
+    .stat-label {
+      color: #94a3b8;
+      margin-top: 0.5rem;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="logo">📍</div>
-      <h1>BPO Address Capture</h1>
-      <p>Professional Address Intelligence for Call Centers</p>
+  <nav class="navbar">
+    <div class="navbar-content">
+      <div class="logo">📍 BPO Address Capture</div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#stats">Stats</a></li>
+        <li><a href="#contact">About</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <div class="content">
-      <div class="features">
-        <div class="feature">
-          <div class="feature-icon">🎤</div>
-          <div class="feature-text">
-            <div class="feature-title">Live Voice Capture</div>
-            <div class="feature-desc">Capture addresses during calls with real-time transcription</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">✍️</div>
-          <div class="feature-text">
-            <div class="feature-title">Direct Input</div>
-            <div class="feature-desc">Type or paste addresses directly into the system</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">📊</div>
-          <div class="feature-text">
-            <div class="feature-title">Smart Extraction</div>
-            <div class="feature-desc">Automatic parsing and validation of Indian addresses</div>
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-icon">✅</div>
-          <div class="feature-text">
-            <div class="feature-title">QA & Review</div>
-            <div class="feature-desc">Built-in quality assurance and address validation</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="button-group">
-        <h2>🚀 Get Started</h2>
-        <a href="/agent" class="btn-large btn-agent">📞 Agent Portal</a>
-        <a href="/admin" class="btn-large btn-admin">👨‍💼 Admin Dashboard</a>
-        <p style="text-align: center; font-size: 12px; color: #8892b0; margin-top: 20px;">
-          Click above to access the portals<br>
-          No login required - Direct access
-        </p>
-      </div>
+  <section class="hero">
+    <h1>Live Address Capture Intelligence</h1>
+    <p>Capture, extract, and validate customer addresses in real-time during calls</p>
+    <div class="cta-buttons">
+      <a href="/agent" class="btn btn-primary">📞 Start as Agent</a>
+      <a href="/admin" class="btn btn-secondary">📊 Admin Dashboard</a>
     </div>
-  </div>
+  </section>
+
+  <section id="features" class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎤</div>
+      <h3>Voice Capture</h3>
+      <p>Record and transcribe addresses directly during customer calls with real-time processing</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <h3>Smart Extraction</h3>
+      <p>Automatic parsing of messy address data with intelligent Indian address recognition</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">✅</div>
+      <h3>QA Workflow</h3>
+      <p>Complete validation pipeline with admin approval and quality scoring</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Analytics</h3>
+      <p>Real-time dashboards tracking agent performance and address metrics</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">👥</div>
+      <h3>Team Management</h3>
+      <p>Monitor agents, track productivity, and manage team performance effortlessly</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔐</div>
+      <h3>Enterprise Security</h3>
+      <p>Enterprise-grade security with role-based access and data encryption</p>
+    </div>
+  </section>
+
+  <section id="stats" class="stats">
+    <div class="stat">
+      <div class="stat-number">247</div>
+      <div class="stat-label">Calls Processed</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">98%</div>
+      <div class="stat-label">Accuracy Rate</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">12</div>
+      <div class="stat-label">Active Agents</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">245</div>
+      <div class="stat-label">Addresses Captured</div>
+    </div>
+  </section>
 </body>
 </html>
