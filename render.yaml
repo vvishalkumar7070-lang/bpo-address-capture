@@ -2,11 +2,17 @@ services:
   - type: web
     name: bpo-address-capture
     env: node
-    plan: free
+    plan: starter
     buildCommand: npm install
-    startCommand: node server.js
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
         value: 3000
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: RENDER_EXTERNAL_URL
+        value: https://bpo-address-capture.onrender.com
