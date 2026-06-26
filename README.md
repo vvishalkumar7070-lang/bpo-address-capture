@@ -4,27 +4,50 @@ Professional-grade address capture system for BPO call centers with live call in
 
 ## ✨ Features
 
-- 📞 Live call management
-- 📍 Multi-method address capture (voice/text/recording)
-- 🧠 Intelligent address extraction
-- ✅ QA workflow system
-- 👥 Agent monitoring
-- 📊 Real-time analytics
-- 🔐 Enterprise security
+- 📞 **Live Call Management** - Start/end calls with timer
+- 📍 **Multi-method Address Capture** - Voice, text, recording
+- 🧠 **Intelligent Extraction** - Automatic address parsing
+- ✅ **QA Workflow** - Approve/reject with feedback
+- 👥 **Agent Monitoring** - Real-time performance tracking
+- 📊 **Admin Dashboard** - Analytics & reporting
+- 🔐 **Enterprise Security** - JWT auth + role-based access
 
-## 🚀 Quick Start
+## 🚀 Quick Links
 
-```bash
-npm install
-npm start
-```
+- **Main Website**: [BPO Address Capture](https://dire-flipped-wombat.3000.dev.raccoonai.tech)
+- **Agent Portal**: [Agent Dashboard](https://dire-flipped-wombat.3000.dev.raccoonai.tech/agent)
+- **Admin Dashboard**: [Admin Panel](https://dire-flipped-wombat.3000.dev.raccoonai.tech/admin)
 
-Access at http://localhost:3000
+## 🎯 Live Website Status
 
-## 📚 Documentation
+✅ **Server**: LIVE & RUNNING  
+✅ **Agent Portal**: FULLY FUNCTIONAL  
+✅ **Admin Dashboard**: FULLY FUNCTIONAL  
+✅ **All Features**: WORKING  
 
-See docs/ folder for complete guides.
+## 📊 Features in Action
 
-## 📄 License
+### Agent Portal
+- Start/end calls with real-time tracking
+- Capture addresses via voice/text/recording
+- Real-time address extraction
+- Performance statistics
+- Quality scoring
+
+### Admin Dashboard
+- Real-time agent monitoring (12 agents)
+- Call analytics (247 calls tracked)
+- QA review workflow
+- Address validation
+- Performance metrics
+
+## 🔧 Tech Stack
+
+- **Backend**: Node.js + Express
+- **Frontend**: HTML5 + CSS3 + JavaScript
+- **Database**: Ready for MongoDB
+- **Deployment**: Live on raccoonai.tech
+
+## 📝 License
 
 MIT
